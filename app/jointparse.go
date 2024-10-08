@@ -10,7 +10,7 @@ import (
 	"yap/nlp/format/lattice"
 	"yap/nlp/format/mapping"
 	"yap/nlp/format/segmentation"
-	. "yap/nlp/parser/dependency/transition"
+	nlptransition "yap/nlp/parser/dependency/transition"
 	"yap/nlp/parser/dependency/transition/morph"
 	"yap/nlp/parser/disambig"
 	"yap/nlp/parser/joint"
@@ -22,13 +22,13 @@ import (
 	"log"
 	"os"
 
+	"flag"
 	"github.com/gonuts/commander"
-	"github.com/gonuts/flag"
 )
 
 var (
-	JointFeaturesFile			string
-	JointModelFile				string
+	JointFeaturesFile             string
+	JointModelFile                string
 	JointStrategy, OracleStrategy string
 	limitdev                      int
 	hebMACompat                   bool
@@ -195,11 +195,11 @@ func JointTrainAndParse(cmd *commander.Command, args []string) error {
 
 	switch DepArcSystemStr {
 	case "standard":
-		arcSystem = &ArcStandard{}
+		arcSystem = &nlptransition.ArcStandard{}
 		terminalStack = 1
 	case "eager":
-		arcSystem = &ArcEager{
-			ArcStandard: ArcStandard{},
+		arcSystem = &nlptransition.ArcEager{
+			ArcStandard: nlptransition.ArcStandard{},
 		}
 		terminalStack = 0
 	default:
@@ -257,7 +257,7 @@ func JointTrainAndParse(cmd *commander.Command, args []string) error {
 	// DON'T REMOVE!!
 	switch DepArcSystemStr {
 	case "standard":
-		arcSystem = &ArcStandard{
+		arcSystem = &nlptransition.ArcStandard{
 			SHIFT:       SH.Value(),
 			LEFT:        LA.Value(),
 			RIGHT:       RA.Value(),
@@ -265,8 +265,8 @@ func JointTrainAndParse(cmd *commander.Command, args []string) error {
 			Relations:   ERel,
 		}
 	case "eager":
-		arcSystem = &ArcEager{
-			ArcStandard: ArcStandard{
+		arcSystem = &nlptransition.ArcEager{
+			ArcStandard: nlptransition.ArcStandard{
 				SHIFT:       SH.Value(),
 				LEFT:        LA.Value(),
 				RIGHT:       RA.Value(),
@@ -447,7 +447,7 @@ func JointTrainAndParse(cmd *commander.Command, args []string) error {
 		// }
 
 		conf := &joint.JointConfig{
-			SimpleConfiguration: SimpleConfiguration{
+			SimpleConfiguration: nlptransition.SimpleConfiguration{
 				EWord:         EWord,
 				EPOS:          EPOS,
 				EWPOS:         EWPOS,
@@ -655,7 +655,7 @@ func JointTrainAndParse(cmd *commander.Command, args []string) error {
 		}
 		switch DepArcSystemStr {
 		case "standard":
-			arcSystem = &ArcStandard{
+			arcSystem = &nlptransition.ArcStandard{
 				SHIFT:       SH.Value(),
 				LEFT:        LA.Value(),
 				RIGHT:       RA.Value(),
@@ -663,8 +663,8 @@ func JointTrainAndParse(cmd *commander.Command, args []string) error {
 				Relations:   ERel,
 			}
 		case "eager":
-			arcSystem = &ArcEager{
-				ArcStandard: ArcStandard{
+			arcSystem = &nlptransition.ArcEager{
+				ArcStandard: nlptransition.ArcStandard{
 					SHIFT:       SH.Value(),
 					LEFT:        LA.Value(),
 					RIGHT:       RA.Value(),
@@ -755,7 +755,7 @@ func JointTrainAndParse(cmd *commander.Command, args []string) error {
 		}
 	}
 	conf := &joint.JointConfig{
-		SimpleConfiguration: SimpleConfiguration{
+		SimpleConfiguration: nlptransition.SimpleConfiguration{
 			EWord:         EWord,
 			EPOS:          EPOS,
 			EWPOS:         EWPOS,

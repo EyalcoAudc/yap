@@ -7,8 +7,8 @@ import (
 	"yap/nlp/parser/xliter8"
 	"yap/nlp/types"
 
+	"flag"
 	"github.com/gonuts/commander"
-	"github.com/gonuts/flag"
 )
 
 var direction string

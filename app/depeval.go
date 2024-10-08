@@ -12,8 +12,8 @@ import (
 	"os"
 	// "strings"
 
+	"flag"
 	"github.com/gonuts/commander"
-	"github.com/gonuts/flag"
 )
 
 func DepEvalConfigOut() {

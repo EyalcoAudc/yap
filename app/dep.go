@@ -10,7 +10,7 @@ import (
 	"yap/nlp/format/conll"
 	"yap/nlp/format/conllu"
 	"yap/nlp/format/lattice"
-	. "yap/nlp/parser/dependency/transition"
+	nlptransition "yap/nlp/parser/dependency/transition"
 	nlp "yap/nlp/types"
 	"yap/util"
 	"yap/util/conf"
@@ -19,8 +19,8 @@ import (
 	"os"
 	// "strings"
 
+	"flag"
 	"github.com/gonuts/commander"
-	"github.com/gonuts/flag"
 )
 
 var (
@@ -112,10 +112,10 @@ func DepTrainAndParse(cmd *commander.Command, args []string) error {
 	)
 	switch DepArcSystemStr {
 	case "standard":
-		arcSystem = &ArcStandard{}
+		arcSystem = &nlptransition.ArcStandard{}
 		terminalStack = 1
 	case "eager":
-		arcSystem = &ArcEager{}
+		arcSystem = &nlptransition.ArcEager{}
 		terminalStack = 0
 	default:
 		panic("Unknown arc system")
@@ -184,7 +184,7 @@ func DepTrainAndParse(cmd *commander.Command, args []string) error {
 	// therefore we re-instantiate the arc system with the right parameters
 	switch DepArcSystemStr {
 	case "standard":
-		arcSystem = &ArcStandard{
+		arcSystem = &nlptransition.ArcStandard{
 			SHIFT:       SH.Value(),
 			LEFT:        LA.Value(),
 			RIGHT:       RA.Value(),
@@ -192,8 +192,8 @@ func DepTrainAndParse(cmd *commander.Command, args []string) error {
 			Relations:   ERel,
 		}
 	case "eager":
-		arcSystem = &ArcEager{
-			ArcStandard: ArcStandard{
+		arcSystem = &nlptransition.ArcEager{
+			ArcStandard: nlptransition.ArcStandard{
 				SHIFT:       SH.Value(),
 				LEFT:        LA.Value(),
 				RIGHT:       RA.Value(),
@@ -328,7 +328,7 @@ func DepTrainAndParse(cmd *commander.Command, args []string) error {
 		model = transitionmodel.NewAvgMatrixSparse(featureSetup.NumFeatures(), formatters, true)
 		// model.Log = true
 
-		conf := &SimpleConfiguration{
+		conf := &nlptransition.SimpleConfiguration{
 			EWord:         EWord,
 			EPOS:          EPOS,
 			EWPOS:         EWPOS,
@@ -554,7 +554,7 @@ func DepTrainAndParse(cmd *commander.Command, args []string) error {
 		}
 	}
 
-	conf := &SimpleConfiguration{
+	conf := &nlptransition.SimpleConfiguration{
 		EWord:         EWord,
 		EPOS:          EPOS,
 		EWPOS:         EWPOS,
@@ -582,7 +582,7 @@ func DepTrainAndParse(cmd *commander.Command, args []string) error {
 		if allOut {
 			log.Println("Starting parser")
 		}
-		go ParseStream(sentsStream, parsedStream, beam)
+		ParseStream(sentsStream, parsedStream, beam)
 		log.Println("Streaming conversion to conll")
 		graphAsConllStream := conll.Graph2ConllStream(parsedStream, EMHost, EMSuffix)
 		if allOut {

@@ -11,8 +11,8 @@ import (
 	"log"
 	// "os"
 
+	"flag"
 	"github.com/gonuts/commander"
-	"github.com/gonuts/flag"
 )
 
 var (

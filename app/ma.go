@@ -15,8 +15,8 @@ import (
 	// "os"
 	"strings"
 
+	"flag"
 	"github.com/gonuts/commander"
-	"github.com/gonuts/flag"
 )
 
 var (
@@ -102,7 +102,7 @@ func MA(cmd *commander.Command, args []string) error {
 		sents, err = raw.ReadFile(inRawFile, limit)
 		sentComments = make([][]string, len(sents))
 		for i, sent := range sents {
-			sentComments[i] = []string{fmt.Sprintf("# text %s", strings.Join(sent.Tokens(), " ")) }
+			sentComments[i] = []string{fmt.Sprintf("# text %s", strings.Join(sent.Tokens(), " "))}
 		}
 		if err != nil {
 			panic(fmt.Sprintf("Failed reading raw file - %v", err))

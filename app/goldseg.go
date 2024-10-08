@@ -8,8 +8,8 @@ import (
 	"fmt"
 	"log"
 
+	"flag"
 	"github.com/gonuts/commander"
-	"github.com/gonuts/flag"
 )
 
 func GoldSegConfigOut() {

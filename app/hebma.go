@@ -16,17 +16,17 @@ import (
 	"log"
 	// "os"
 
+	"flag"
 	"github.com/gonuts/commander"
-	"github.com/gonuts/flag"
 )
 
 var (
 	HebMaPrefixFile, HebMaLexiconFile string
 	HebMaXliter8out, HebMaAlwaysnnp   bool
-	HebMaNnpnofeats              bool
-	HebMaShowoov                 bool
-	outJSON                 bool
-	HEB_MA_DEFAULT_DATA_DIRS       = []string{".", "data/bgulex"}
+	HebMaNnpnofeats                   bool
+	HebMaShowoov                      bool
+	outJSON                           bool
+	HEB_MA_DEFAULT_DATA_DIRS          = []string{".", "data/bgulex"}
 )
 
 func HebMAConfigOut() {

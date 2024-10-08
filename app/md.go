@@ -19,8 +19,8 @@ import (
 	"log"
 	"os"
 
+	"flag"
 	"github.com/gonuts/commander"
-	"github.com/gonuts/flag"
 	"yap/nlp/format/conllul"
 )
 
@@ -731,7 +731,7 @@ func MDTrainAndParse(cmd *commander.Command, args []string) error {
 		if allOut {
 			log.Println("Starting parser")
 		}
-		go ParseStream(predAmbLatStream, mappings, beam)
+		ParseStream(predAmbLatStream, mappings, beam)
 		if allOut {
 			log.Println("Creating writer stream to", outMap)
 		}

@@ -1,10 +1,12 @@
+//go:build !appengine
 // +build !appengine
 
 package main
 
 import (
-	_ "net/http/pprof"
+	"context"
 	"github.com/gonuts/commander"
+	_ "net/http/pprof"
 
 	"fmt"
 	"os"
@@ -28,7 +30,11 @@ func exit(err error) {
 }
 
 func main() {
-	if err := cmd.Dispatch(os.Args[1:]); err != nil {
+	// Create a context
+	ctx := context.Background()
+
+	// Dispatch command with the context and command-line arguments
+	if err := cmd.Dispatch(ctx, os.Args[1:]); err != nil {
 		exit(err)
 	}
 
